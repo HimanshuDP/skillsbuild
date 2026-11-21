@@ -28,8 +28,9 @@
            padding: 20px;
        }
 
+       /* FIX 1 (Critical): Added missing closing parenthesis ')' to url() in background-image */
        .image-container {
-           background-image: url('https://images.unsplash.com/photo-1514066558159-fc8c737ef259?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8MHx8fA%3D%3D';
+           background-image: url('https://images.unsplash.com/photo-1514066558159-fc8c737ef259?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8MHx8fA%3D%3D');
            background-size: cover;
            background-position: center;
            height: 100%;
@@ -47,7 +48,10 @@
            background: wheat;
        }
 
-       header h1 {
+       /* FIX 2 (Medium): Changed 'header h1' and 'header p' to '.header-container h1'
+          and '.header-container p' — the HTML has no <header> element, so these
+          selectors matched nothing and styles were never applied. */
+       .header-container h1 {
            color: #FFCC00; /* Bright gold for contrast */
            font-size: 3em;
            margin-bottom: 10px;
@@ -55,22 +59,13 @@
            line-height: 1.2; /* Adjust spacing between lines */
        }
 
-       header p {
+       .header-container p {
            font-size: 1.3em;
            color: #FFFFFF; /* White for good readability */
            margin: 0;
            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Subtle shadow for depth */
        }
 
-       /* .menu-section {
-           background-color: #000000;
-           color: #FFFFFF;
-           padding: 20px;
-           margin: 0;
-           width: 90%;
-           border-radius: 15px;
-           box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
-       } */
        .menu-section {
            background-color: #000000;
            color: #FFFFFF;
@@ -134,9 +129,14 @@
 
    <script>
        function toggleMenuItems() {
-           const menuItems = document.querySelector('.menu-item');
+           /* FIX 3 (Critical): Changed '.menu-item' (singular, non-existent) to
+              '.menu-items' (plural) so querySelector finds the actual <ul> element.
+              Without this fix, menuItems was null and calling .style on it
+              threw a TypeError, completely breaking the toggle behavior. */
+           const menuItems = document.querySelector('.menu-items');
            menuItems.style.display = menuItems.style.display === 'block' ? 'none' : 'block';
        }
    </script>
 </body>
 </html>
+
